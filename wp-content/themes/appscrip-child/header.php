@@ -1,0 +1,136 @@
+<?php
+
+/**
+ * The header for our theme
+ *
+ * This is the template that displays all of the <head> section and everything up until <div id="content">
+ *
+ * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
+ *
+ * @package Bootscore
+ *
+ * @version 5.3.0
+ */
+
+?>
+<!doctype html>
+<html <?php language_attributes(); ?>>
+
+<head>
+  <meta charset="<?php bloginfo('charset'); ?>">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="profile" href="https://gmpg.org/xfn/11">
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="<?php echo get_stylesheet_directory_uri(); ?>/img/favicon/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="<?php echo get_stylesheet_directory_uri(); ?>/img/favicon/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="<?php echo get_stylesheet_directory_uri(); ?>/img/favicon/favicon.png">
+  <link rel="manifest" href="<?php echo get_stylesheet_directory_uri(); ?>/img/favicon/site.webmanifest">
+  <link rel="mask-icon" href="<?php echo get_stylesheet_directory_uri(); ?>/img/favicon/favicon.png" color="#0d6efd">
+  <meta name="msapplication-TileColor" content="#2347BD">
+  <meta name="theme-color" content="#2347BD">
+  <?php wp_head(); ?>
+</head>
+
+<body <?php body_class(); ?>>
+
+<?php wp_body_open(); ?>
+
+<div id="page" class="site">
+
+  <header id="masthead" class="site-header">
+
+    <div class="fixed-top bg-body-white">
+
+      <nav id="nav-main" class="navbar navbar-expand-xl">
+
+        <div class="<?php echo bootscore_container_class(); ?>">
+
+          <!-- Navbar Brand -->
+          <a class="navbar-brand" href="<?php echo esc_url(home_url()); ?>"><img src="<?php echo esc_url(get_stylesheet_directory_uri()); ?>/img/logo/logo.png" alt="logo" class="logo"></a>
+
+          <!-- Navbar -->
+          <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas-navbar">
+            <div class="offcanvas-header">
+              <span class="h5 offcanvas-title"><?php esc_html_e('appscrip', 'bootscore'); ?></span>
+              <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+
+              <!--  Main Menu -->
+              <?php
+              wp_nav_menu(array(
+                'theme_location' => 'main-menu',
+                'container'      => false,
+                'menu_class'     => '',
+                'fallback_cb'    => '__return_false',
+                'items_wrap'     => '<ul id="bootscore-navbar" class="navbar-nav ms-auto %2$s">%3$s</ul>',
+                'depth'          => 2,
+                'walker'         => new bootstrap_5_wp_nav_menu_walker()
+              ));
+              ?>
+
+              <!-- Top Nav 2 Widget -->
+              <?php if (is_active_sidebar('top-nav-2')) : ?>
+                <?php dynamic_sidebar('top-nav-2'); ?>
+              <?php endif; ?>
+
+            </div>
+          </div>
+
+          <div class="header-actions d-flex align-items-center">
+
+            <!-- Top Nav Widget -->
+            <?php if (is_active_sidebar('top-nav')) : ?>
+              <?php dynamic_sidebar('top-nav'); ?>
+            <?php endif; ?>
+
+            <?php
+            if (class_exists('WooCommerce')) :
+              get_template_part('template-parts/header/actions', 'woocommerce');
+            else :
+              get_template_part('template-parts/header/actions');
+            endif;
+            ?>
+
+            <!-- Navbar Toggler -->
+            <button class="btn btn-outline-secondary btn-hamburger d-xl-none ms-1 ms-md-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas-navbar" aria-controls="offcanvas-navbar" aria-label="Menu">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <g transform="translate(-172 -188)">
+                  <g id="Send">
+                    <path id="Vector" d="M0,0H24V24H0Z" transform="translate(172 188)" fill="currentColor" opacity="0"/>
+                    <g id="Group_169639" data-name="Group 169639" transform="translate(0 -5)">
+                      <path id="Vector-2" data-name="Vector" d="M0,0H17" transform="translate(175.5 212)" fill="currentColor" stroke="#292d32" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                      <path id="Vector-3" data-name="Vector" d="M0,0H17" transform="translate(175.5 205)" fill="currentColor" stroke="#292d32" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                      <path id="Vector-4" data-name="Vector" d="M0,0H17" transform="translate(175.5 198)" fill="currentColor" stroke="#292d32" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+
+            </button>
+
+          </div><!-- .header-actions -->
+
+        </div><!-- container_class -->
+
+      </nav><!-- .navbar -->
+
+      <?php
+      if (class_exists('WooCommerce')) :
+        get_template_part('template-parts/header/top-nav-search-collapse', 'woocommerce');
+      else :
+        get_template_part('template-parts/header/top-nav-search-collapse');
+      endif;
+      ?>
+
+    </div><!-- .fixed-top .bg-light -->
+
+    <!-- User and Cart -->
+    <?php
+    if (class_exists('WooCommerce')) :
+      get_template_part('template-parts/header/offcanvas', 'woocommerce');
+    endif;
+    ?>
+
+  </header><!-- #masthead -->
